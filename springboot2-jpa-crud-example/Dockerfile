@@ -1,5 +1,5 @@
 # Use a base image that includes Maven and Java
-FROM maven:3.8.4-openjdk-11-slim AS build
+FROM maven:4.0.0-openjdk-11-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 
 # Build the application
-RUN mvn package -DskipTests --batch-mode -Dmaven.compiler.target=17 -Dmaven.compiler.source=17
+RUN mvn package -DskipTests
 
 # Use a lightweight base image for running the application
 FROM openjdk:11-jre-slim
