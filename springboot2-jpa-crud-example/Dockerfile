@@ -14,7 +14,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 
 # Build the application
-RUN mvn package -DskipTests --batch-mode -Dmaven.compiler.target=11 -Dmaven.compiler.source=11
+RUN mvn package -DskipTests --batch-mode -Dmaven.compiler.target=17 -Dmaven.compiler.source=17
 
 # Use a lightweight base image for running the application
 FROM openjdk:11-jre-slim
