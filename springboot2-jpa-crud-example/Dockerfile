@@ -17,7 +17,7 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 # Use a lightweight base image for running the application
-FROM openjdk:17-jre-hotspot
+FROM openjdk:17-jre-slim
 
 # Copy the JAR file from the build stage to the container
 COPY --from=build /app/target/*.jar /app.jar
