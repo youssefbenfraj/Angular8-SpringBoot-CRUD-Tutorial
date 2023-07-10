@@ -1,5 +1,5 @@
-# Use a base image that includes Maven and Java
-FROM maven:4.0.0-openjdk-11-slim AS build
+# Use a base image that includes Maven and OpenJDK 17
+FROM maven:3.8.4-openjdk-17-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,10 +17,13 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 # Use a lightweight base image for running the application
-FROM openjdk:11-jre-slim
+FROM adoptopenjdk:17-jre-hotspot
+
+# Set the working directory inside the container
+WORKDIR /app
 
 # Copy the JAR file from the build stage to the container
-COPY --from=build /app/target/*.jar /app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 # Specify the command to run your application
 CMD ["java", "-jar", "app.jar"]
