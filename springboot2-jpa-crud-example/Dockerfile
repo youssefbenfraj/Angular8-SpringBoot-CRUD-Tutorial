@@ -1,5 +1,5 @@
 # Use a base image that includes Maven and Java
-FROM maven:3.8.4-openjdk-11-slim AS build
+FROM maven:3.8.4-openjdk-17-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 # Use a lightweight base image for running the application
-FROM openjdk:11-jre-slim
+FROM openjdk:17-jre-hotspot
 
 # Copy the JAR file from the build stage to the container
 COPY --from=build /app/target/*.jar /app.jar
